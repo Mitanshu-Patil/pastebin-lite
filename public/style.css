@@ -1,0 +1,8 @@
+body {
+  font-family: Arial;
+  padding: 40px;
+}
+textarea {
+  width: 400px;
+  height: 150px;
+}

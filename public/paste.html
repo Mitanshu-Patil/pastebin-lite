@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>View Paste</title>
+</head>
+<body>
+  <pre id="paste"></pre>
+  <script>
+    fetch("/api/pastes/" + location.pathname.split("/").pop())
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("paste").textContent = data.content;
+      })
+      .catch(() => document.body.innerHTML = "404 Paste not found");
+  </script>
+</body>
+</html>
