@@ -11,9 +11,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
-app.get("/", (req, res) => {
-  res.send("✅ Pastebin Lite API is running successfully");
-});
 
 mongoose
   .connect(process.env.MONGO_URI)
