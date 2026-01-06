@@ -3,7 +3,6 @@ const Paste = require("../models/paste");
 
 const router = express.Router();
 
-/* ================= HEALTH CHECK ================= */
 router.get("/healthz", async (req, res) => {
   try {
     await Paste.findOne();
@@ -13,7 +12,6 @@ router.get("/healthz", async (req, res) => {
   }
 });
 
-/* ================= CREATE PASTE ================= */
 router.post("/pastes", async (req, res) => {
   try {
     const { content, ttl_seconds, max_views } = req.body;
@@ -53,7 +51,6 @@ router.post("/pastes", async (req, res) => {
   }
 });
 
-/* ================= FETCH PASTE ================= */
 router.get("/pastes/:id", async (req, res) => {
   try {
     const paste = await Paste.findById(req.params.id);
@@ -66,17 +63,14 @@ router.get("/pastes/:id", async (req, res) => {
         ? new Date(Number(req.headers["x-test-now-ms"]))
         : new Date();
 
-    // TTL CHECK
     if (paste.expiresAt && now > paste.expiresAt) {
       return res.status(404).json({ error: "Expired" });
     }
 
-    // MAX VIEWS CHECK
     if (paste.maxViews !== null && paste.views >= paste.maxViews) {
       return res.status(404).json({ error: "View limit exceeded" });
     }
 
-    // INCREMENT VIEW COUNT
     paste.views += 1;
     await paste.save();
 
