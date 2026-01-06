@@ -11,9 +11,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGO_URI)
+app.get("/", (req, res) => {
+  res.send("✅ Pastebin Lite API is running successfully");
+});
+
+mongoose
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
 
 app.use("/api", pasteRoutes);
 
